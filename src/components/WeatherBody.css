@@ -1,0 +1,48 @@
+.weather-body {
+  background-color: rgb(245, 245, 245);
+  border-radius: 1rem;
+  padding: 1rem;
+  color: rgb(3 7 18);
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.weather-summary {
+  padding: 0.5rem;
+  grid-column: span 2 / span 2;
+  border-right: 1px solid rgb(209, 213, 219);
+}
+
+.weather-details {
+  padding: 0.5rem;
+  grid-column: span 3 / span 3;
+}
+
+.weather-image {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgb(17 24 39);
+}
+
+.weather-image svg {
+  flex-shrink: 0;
+}
+
+.nav-items {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-item {
+  border-bottom: 3px solid rgb(209, 213, 219);
+  transition: 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  border-bottom: 3px solid rgb(156 163 175);
+}

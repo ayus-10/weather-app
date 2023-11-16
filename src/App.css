@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(96 165 250),
+    rgb(56 189 248)
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+}
