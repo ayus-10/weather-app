@@ -2,7 +2,7 @@
   background-color: rgb(245, 245, 245);
   border-radius: 1rem;
   padding: 1rem;
-  color: rgb(3 7 18);
+  color: rgb(17 24 39);
   max-width: 800px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -38,11 +38,22 @@
 }
 
 .nav-item {
+  font-weight: 600;
   border-bottom: 3px solid rgb(209, 213, 219);
-  transition: 0.1s ease-in-out;
+  transition: 0.2s ease-in-out;
   cursor: pointer;
 }
 
 .nav-item:hover {
-  border-bottom: 3px solid rgb(156 163 175);
+  border-bottom: 3px solid rgb(17 24 39);
+}
+
+.weather-stats {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-stats li {
+  padding: 0.5rem;
 }
