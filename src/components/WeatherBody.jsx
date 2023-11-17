@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import {
   TiWeatherCloudy,
-  TiWeatherShower,
+  TiWeatherDownpour,
   TiWeatherPartlySunny,
+  TiWeatherShower,
+  TiWeatherSnow,
   TiWeatherStormy,
   TiWeatherSunny,
+  TiWeatherWindy,
   TiWeatherWindyCloudy,
 } from "react-icons/ti";
 import "./WeatherBody.css";
 
 const WeatherBody = () => {
-  const navItems = ["Weather Stats", "Other Stats", "Options"];
+  const [activeTab, setActiveTab] = useState("weatherStats");
 
-  const weatherStats = [
-    "Temperature",
-    "Feels like",
-    "Max temperature",
-    "Min temperature",
-  ];
+  const changeActiveTab = (tab) => {
+    setActiveTab(tab);
+  };
 
   const [weatherData, setWeatherData] = useState({});
 
@@ -33,6 +33,15 @@ const WeatherBody = () => {
     getWeather();
   }, []);
 
+  // https://openweathermap.org/weather-conditions
+  const weatherIcon = (id) => {
+    if (id >= 200 && id < 300) {
+      return <TiWeatherStormy />;
+    } else if (id >= 300 && id < 400) {
+      return <TiWeatherStormy />;
+    }
+  };
+
   return (
     <div className="weather-body">
       <div className="weather-summary">
@@ -40,32 +49,83 @@ const WeatherBody = () => {
           <TiWeatherCloudy size={80} />
           {weatherData.weather && <span>{weatherData.weather[0].main}</span>}
         </div>
-      </div>
-      <div className="weather-details">
-        <div className="nav-items">
-          {navItems.map((navItem, index) => (
-            <span className="nav-item" key={index}>
-              {navItem}
-            </span>
-          ))}
-        </div>
-        <div className="weather-stats">
+        <div className="other-details">
           <ul>
-            {weatherStats.map((weatherStat, index) => (
-              <li key={index}>{weatherStat}</li>
-            ))}
+            <li>Country:</li>
+            <li>City:</li>
+            <li>Longitude:</li>
+            <li>Latitude:</li>
           </ul>
           <ul>
-            {weatherData.main && (
+            {weatherData.sys && <li>{weatherData.sys.country}</li>}
+            <li>{weatherData.name}</li>
+            {weatherData.coord && (
               <>
-                <li>{weatherData.main.temp}</li>
-                <li>{weatherData.main.feels_like}</li>
-                <li>{weatherData.main.temp_max}</li>
-                <li>{weatherData.main.temp_min}</li>
+                <li>{weatherData.coord.lon}&deg;</li>
+                <li>{weatherData.coord.lat}&deg;</li>
               </>
             )}
           </ul>
         </div>
+      </div>
+      <div className="weather-details">
+        <div className="nav-items">
+          <button
+            className="nav-item"
+            onClick={() => changeActiveTab("weatherStats")}
+          >
+            Weather Stats
+          </button>
+          <button
+            className="nav-item"
+            onClick={() => changeActiveTab("otherStats")}
+          >
+            Other Stats
+          </button>
+        </div>
+        {activeTab === "weatherStats" ? (
+          <div className="stats">
+            <ul>
+              <li>Temperature</li>
+              <li>Feels like</li>
+              <li>Max temperature</li>
+              <li>Min temperature</li>
+            </ul>
+            <ul>
+              {weatherData.main && (
+                <>
+                  <li>{weatherData.main.temp}</li>
+                  <li>{weatherData.main.feels_like}</li>
+                  <li>{weatherData.main.temp_max}</li>
+                  <li>{weatherData.main.temp_min}</li>
+                </>
+              )}
+            </ul>
+          </div>
+        ) : (
+          <div className="stats">
+            <ul>
+              <li>Sunrise</li>
+              <li>Sunset</li>
+              <li>Pressure</li>
+              <li>Humidity</li>
+            </ul>
+            <ul>
+              {weatherData.sys && (
+                <>
+                  <li>{weatherData.sys.sunrise}</li>
+                  <li>{weatherData.sys.sunset}</li>
+                </>
+              )}
+              {weatherData.main && (
+                <>
+                  <li>{weatherData.main.pressure}</li>
+                  <li>{weatherData.main.humidity}</li>
+                </>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

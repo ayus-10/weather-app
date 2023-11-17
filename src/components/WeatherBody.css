@@ -14,11 +14,6 @@
   border-right: 1px solid rgb(209, 213, 219);
 }
 
-.weather-details {
-  padding: 0.5rem;
-  grid-column: span 3 / span 3;
-}
-
 .weather-image {
   display: flex;
   align-items: center;
@@ -28,17 +23,38 @@
   color: rgb(17 24 39);
 }
 
+.other-details {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.other-details li {
+  list-style: none;
+}
+
+.weather-details {
+  padding: 0.5rem;
+  grid-column: span 3 / span 3;
+}
+
 .weather-image svg {
   flex-shrink: 0;
 }
 
 .nav-items {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0 2rem;
 }
 
 .nav-item {
+  font-size: 1rem;
   font-weight: 600;
+  background-color: transparent;
+  border: 0;
   border-bottom: 3px solid rgb(209, 213, 219);
   transition: 0.2s ease-in-out;
   cursor: pointer;
@@ -48,12 +64,13 @@
   border-bottom: 3px solid rgb(17 24 39);
 }
 
-.weather-stats {
+.stats {
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
 }
 
-.weather-stats li {
+.stats li {
+  list-style: none;
   padding: 0.5rem;
 }
