@@ -7,7 +7,6 @@ import {
   TiWeatherSnow,
   TiWeatherStormy,
   TiWeatherSunny,
-  TiWeatherWindy,
   TiWeatherWindyCloudy,
 } from "react-icons/ti";
 import "./WeatherBody.css";
@@ -21,9 +20,10 @@ const WeatherBody = () => {
 
   const [weatherData, setWeatherData] = useState({});
 
+  // Enjoy the free API (^_^)
   const getWeather = () => {
     fetch(
-      "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=9e29402da1d0377e04d1e1503b4d8046&units=metric"
+      `https://api.openweathermap.org/data/2.5/weather?q=kathmandu&APPID=9e29402da1d0377e04d1e1503b4d8046&units=metric`
     )
       .then((response) => response.json())
       .then((json) => setWeatherData(json));
@@ -33,12 +33,24 @@ const WeatherBody = () => {
     getWeather();
   }, []);
 
-  // https://openweathermap.org/weather-conditions
-  const weatherIcon = (id) => {
+  // Please refer https://openweathermap.org/weather-conditions
+  const getWeatherIcon = (id) => {
     if (id >= 200 && id < 300) {
-      return <TiWeatherStormy />;
+      return <TiWeatherStormy size={80} />;
     } else if (id >= 300 && id < 400) {
-      return <TiWeatherStormy />;
+      return <TiWeatherShower size={80} />;
+    } else if (id >= 500 && id < 600) {
+      return <TiWeatherDownpour size={80} />;
+    } else if (id >= 600 && id < 700) {
+      return <TiWeatherSnow size={80} />;
+    } else if (id >= 700 && id < 800) {
+      return <TiWeatherWindyCloudy size={80} />;
+    } else if (id == 800) {
+      return <TiWeatherSunny size={80} />;
+    } else if (id > 800 && id < 900) {
+      return <TiWeatherCloudy size={80} />;
+    } else {
+      return <TiWeatherPartlySunny size={80} />;
     }
   };
 
@@ -46,38 +58,44 @@ const WeatherBody = () => {
     <div className="weather-body">
       <div className="weather-summary">
         <div className="weather-image">
-          <TiWeatherCloudy size={80} />
-          {weatherData.weather && <span>{weatherData.weather[0].main}</span>}
+          {weatherData.weather && (
+            <>
+              {getWeatherIcon(parseInt(weatherData.weather[0].id))}
+              <span>{weatherData.weather[0].main}</span>
+            </>
+          )}
         </div>
         <div className="other-details">
           <ul>
-            <li>Country:</li>
-            <li>City:</li>
-            <li>Longitude:</li>
-            <li>Latitude:</li>
-          </ul>
-          <ul>
-            {weatherData.sys && <li>{weatherData.sys.country}</li>}
-            <li>{weatherData.name}</li>
-            {weatherData.coord && (
-              <>
-                <li>{weatherData.coord.lon}&deg;</li>
-                <li>{weatherData.coord.lat}&deg;</li>
-              </>
-            )}
+            <li>
+              <span>Country:</span>
+              {weatherData.sys && <span>{weatherData.sys.country}</span>}
+            </li>
+            <li>
+              <span>City/Town:</span>
+              <span>{weatherData.name}</span>
+            </li>
+            <li>
+              <span>Longitude:</span>
+              {weatherData.coord && <span>{weatherData.coord.lon}</span>}
+            </li>
+            <li>
+              <span>Latitude:</span>
+              {weatherData.coord && <span>{weatherData.coord.lon}</span>}
+            </li>
           </ul>
         </div>
       </div>
       <div className="weather-details">
         <div className="nav-items">
           <button
-            className="nav-item"
+            className={`nav-item ${activeTab === "weatherStats" && "active"}`}
             onClick={() => changeActiveTab("weatherStats")}
           >
             Weather Stats
           </button>
           <button
-            className="nav-item"
+            className={`nav-item ${activeTab === "otherStats" && "active"}`}
             onClick={() => changeActiveTab("otherStats")}
           >
             Other Stats
@@ -85,42 +103,52 @@ const WeatherBody = () => {
         </div>
         {activeTab === "weatherStats" ? (
           <div className="stats">
-            <ul>
-              <li>Temperature</li>
-              <li>Feels like</li>
-              <li>Max temperature</li>
-              <li>Min temperature</li>
-            </ul>
-            <ul>
-              {weatherData.main && (
-                <>
-                  <li>{weatherData.main.temp}</li>
-                  <li>{weatherData.main.feels_like}</li>
-                  <li>{weatherData.main.temp_max}</li>
-                  <li>{weatherData.main.temp_min}</li>
-                </>
-              )}
-            </ul>
+            {weatherData.main && (
+              <ul>
+                <li>
+                  <span>Temperature</span>
+                  <span>{weatherData.main.temp}&deg;C</span>
+                </li>
+                <li>
+                  <span>Feels like</span>
+                  <span>{weatherData.main.feels_like}&deg;C</span>
+                </li>
+                <li>
+                  <span>Max temperature</span>
+                  <span>{weatherData.main.temp_max}&deg;C</span>
+                </li>
+                <li>
+                  <span>Min temperature</span>
+                  <span>{weatherData.main.temp_min}&deg;C</span>
+                </li>
+              </ul>
+            )}
           </div>
         ) : (
           <div className="stats">
             <ul>
-              <li>Sunrise</li>
-              <li>Sunset</li>
-              <li>Pressure</li>
-              <li>Humidity</li>
-            </ul>
-            <ul>
-              {weatherData.sys && (
-                <>
-                  <li>{weatherData.sys.sunrise}</li>
-                  <li>{weatherData.sys.sunset}</li>
-                </>
+              {weatherData.wind && (
+                <li>
+                  <span>Wind</span>
+                  <span>
+                    {weatherData.wind.speed}m/s, {weatherData.wind.deg}&deg;
+                  </span>
+                </li>
               )}
+              <li>
+                <span>Visibility</span>
+                <span>{weatherData.visibility}m</span>
+              </li>
               {weatherData.main && (
                 <>
-                  <li>{weatherData.main.pressure}</li>
-                  <li>{weatherData.main.humidity}</li>
+                  <li>
+                    <span>Pressure</span>
+                    <span>{weatherData.main.pressure}hPa</span>
+                  </li>
+                  <li>
+                    <span>Humidity</span>
+                    <span>{weatherData.main.humidity}%</span>
+                  </li>
                 </>
               )}
             </ul>
