@@ -11,7 +11,7 @@ import {
 } from "react-icons/ti";
 import "./WeatherBody.css";
 
-const WeatherBody = () => {
+const WeatherBody = (props) => {
   const [activeTab, setActiveTab] = useState("weatherStats");
 
   const changeActiveTab = (tab) => {
@@ -23,15 +23,16 @@ const WeatherBody = () => {
   // Enjoy the free API (^_^)
   const getWeather = () => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=kathmandu&APPID=9e29402da1d0377e04d1e1503b4d8046&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${props.location}&APPID=9e29402da1d0377e04d1e1503b4d8046&units=metric`
     )
       .then((response) => response.json())
       .then((json) => setWeatherData(json));
+    console.log(props.location);
   };
 
   useEffect(() => {
     getWeather();
-  }, []);
+  }, [props.location]);
 
   // Please refer https://openweathermap.org/weather-conditions
   const getWeatherIcon = (id) => {
@@ -128,17 +129,19 @@ const WeatherBody = () => {
           <div className="stats">
             <ul>
               {weatherData.wind && (
-                <li>
-                  <span>Wind</span>
-                  <span>
-                    {weatherData.wind.speed}m/s, {weatherData.wind.deg}&deg;
-                  </span>
-                </li>
+                <>
+                  <li>
+                    <span>Wind</span>
+                    <span>
+                      {weatherData.wind.speed}m/s, {weatherData.wind.deg}&deg;
+                    </span>
+                  </li>
+                  <li>
+                    <span>Visibility</span>
+                    <span>{weatherData.visibility}m</span>
+                  </li>
+                </>
               )}
-              <li>
-                <span>Visibility</span>
-                <span>{weatherData.visibility}m</span>
-              </li>
               {weatherData.main && (
                 <>
                   <li>

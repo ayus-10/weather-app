@@ -1,8 +1,14 @@
+:root {
+  --light: rgb(245, 245, 245);
+  --dark: rgb(17, 24, 39);
+  --grey: rgb(209, 213, 219);
+}
+
 .weather-body {
-  background-color: rgb(245, 245, 245);
+  background-color: var(--light);
   border-radius: 1rem;
   padding: 1rem;
-  color: rgb(17 24 39);
+  color: var(--dark);
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
@@ -10,7 +16,7 @@
 .weather-summary {
   padding: 0.5rem;
   grid-column: span 2 / span 2;
-  border-right: 1px solid rgb(209, 213, 219);
+  border-right: 1px solid var(--grey);
 }
 
 .weather-image {
@@ -19,7 +25,7 @@
   justify-content: space-around;
   font-size: 3rem;
   font-weight: 700;
-  color: rgb(17 24 39);
+  color: var(--dark);
 }
 
 .other-details {
@@ -56,14 +62,14 @@
   font-weight: 600;
   background-color: transparent;
   border: 0;
-  border-bottom: 3px solid rgb(209, 213, 219);
+  border-bottom: 3px solid var(--grey);
   transition: 0.2s ease-in-out;
   cursor: pointer;
   outline: none;
 }
 
 .nav-item:hover {
-  border-bottom: 3px solid rgb(17 24 39);
+  border-bottom: 3px solid var(--dark);
 }
 
 .stats {
@@ -78,10 +84,10 @@
 }
 
 .active {
-  border-bottom: 3px solid rgb(17 24 39);
+  border-color: var(--dark);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .weather-body {
     display: flex;
     flex-direction: column;
@@ -89,6 +95,6 @@
 
   .weather-summary {
     border-right: 0;
-    border-bottom: 1px solid rgb(209, 213, 219);
+    border-bottom: 1px solid var(--grey);
   }
 }
