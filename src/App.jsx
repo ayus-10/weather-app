@@ -6,7 +6,8 @@ import { CiSearch } from "react-icons/ci";
 const App = () => {
   const [location, setLocation] = useState("Kathmandu"); // Default location
 
-  const changeLocation = () => {
+  const changeLocation = (event) => {
+    event.preventDefault();
     var inputLocation = document.getElementById("inputLocation").value;
     setLocation(inputLocation);
   };
@@ -14,17 +15,17 @@ const App = () => {
   return (
     <div className="wrapper">
       <div className="container">
-        <div className="search-bar-div">
+        <form className="search-bar-div" onSubmit={changeLocation}>
           <input
             id="inputLocation"
             type="text"
             className="search-bar"
             placeholder="Type a city/town name here..."
           />
-          <button className="search-button" onClick={changeLocation}>
+          <button className="search-button">
             <CiSearch />
           </button>
-        </div>
+        </form>
         <WeatherBody location={location} />
       </div>
     </div>
