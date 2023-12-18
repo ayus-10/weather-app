@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   TiWeatherCloudy,
   TiWeatherDownpour,
-  TiWeatherPartlySunny,
   TiWeatherShower,
   TiWeatherSnow,
   TiWeatherStormy,
@@ -18,21 +17,7 @@ const WeatherBody = (props) => {
     setActiveTab(tab);
   };
 
-  const [weatherData, setWeatherData] = useState({});
-
-  // Enjoy the free API (^_^)
-  const getWeather = () => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${props.location}&APPID=9e29402da1d0377e04d1e1503b4d8046&units=metric`
-    )
-      .then((response) => response.json())
-      .then((json) => setWeatherData(json));
-    console.log(props.location);
-  };
-
-  useEffect(() => {
-    getWeather();
-  }, [props.location]);
+  const weatherData = props.weatherData;
 
   // Please refer https://openweathermap.org/weather-conditions
   const getWeatherIcon = (id) => {
@@ -50,8 +35,6 @@ const WeatherBody = (props) => {
       return <TiWeatherSunny size={80} />;
     } else if (id > 800 && id < 900) {
       return <TiWeatherCloudy size={80} />;
-    } else {
-      return <TiWeatherPartlySunny size={80} />;
     }
   };
 
