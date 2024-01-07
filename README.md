@@ -1,6 +1,6 @@
 # About
 
-This is a simple weather application that uses a free weather API, built using React(Vite).
+This is a simple weather application that uses a free weather API, built using React JS.
 
 ![Demo Image](https://www.aayushupreti.com.np/assets/weather-d0603fc9.png)
 
